@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    public void GameOver()
+    {
+        Debug.Log("GameOver");
+    }
+
     void LateUpdate()
     {
         if (player.transform.position.z >= 1000)
@@ -31,7 +36,7 @@ public class GameManager : MonoBehaviour
             GameObject[] objsInScene = FindObjectsOfType(typeof(GameObject)) as GameObject[];
             foreach(GameObject go in objsInScene)
             {
-                if(go.transform.parent == null)
+                if(go.transform.parent == null && go.transform.position != Vector3.zero)
                 {
                     go.transform.position -= new Vector3(0, 0, 1000);
                 }
@@ -42,7 +47,7 @@ public class GameManager : MonoBehaviour
             GameObject[] objsInScene = FindObjectsOfType(typeof(GameObject)) as GameObject[];
             foreach (GameObject go in objsInScene)
             {
-                if (go.transform.parent == null)
+                if (go.transform.parent == null && go.transform.position != Vector3.zero)
                 {
                     go.transform.position -= new Vector3(1000, 0, 0);
                 }

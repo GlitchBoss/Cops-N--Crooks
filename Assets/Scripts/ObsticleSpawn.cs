@@ -35,7 +35,6 @@ public class ObsticleSpawn : MonoBehaviour {
         if(other.tag == "Player")
         {
             SM.OnPlayerPassedObsticle();
-            Debug.Log("Player passed obsticle");
         }
     }
 }

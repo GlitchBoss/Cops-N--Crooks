@@ -29,13 +29,11 @@ public class SpawnManager : MonoBehaviour {
             Instantiate(obsticles[index], nextSpawnPoint.position, nextSpawnPoint.rotation);
             spawnTurnObsticle--;
         }
-        Debug.Log("Spawned obsticle");
         numOfObsticles++;
     }
 
     public void SetNextSpawnPoint(Transform spawnPoint)
     {
         nextSpawnPoint = spawnPoint;
-        Debug.Log("Set spawn point");
     }
 }

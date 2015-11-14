@@ -8,15 +8,19 @@ public class PlayerController : MonoBehaviour {
 
     Rigidbody m_Rigidbody;
     CharacterController controller;
+    bool gameEnded;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+        gameEnded = false;
     }
 
     void Update()
     {
+        if (gameEnded)
+            return;
         //m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, speed);
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -27,5 +31,19 @@ public class PlayerController : MonoBehaviour {
             transform.Rotate(Vector3.up, 90, Space.Self);
         }
         controller.Move(transform.forward * speed);
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.transform.tag == "Building")
+        {
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+        GameManager.instance.GameOver();
+        gameEnded = true;
     }
 }
