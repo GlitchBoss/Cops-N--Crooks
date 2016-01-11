@@ -3,34 +3,39 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed;
+    public Vector3 speed;
     public float jumpHeight;
 
     Rigidbody m_Rigidbody;
-    CharacterController controller;
+    //CharacterController controller;
     bool gameEnded;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
         gameEnded = false;
     }
 
     void Update()
     {
         if (gameEnded)
+        {
+            m_Rigidbody.velocity = Vector3.zero;
             return;
-        //m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, speed);
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             m_Rigidbody.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.Rotate(Vector3.up, 90, Space.Self);
-        }
-        controller.Move(transform.forward * speed);
+        m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, speed.z);
+        //m_Rigidbody.velocity = speed;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.tag == "Building")
+            GameOver();
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

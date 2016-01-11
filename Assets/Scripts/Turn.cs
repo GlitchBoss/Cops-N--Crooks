@@ -21,16 +21,18 @@ public class Turn : MonoBehaviour {
 
     public Direction direction = Direction.right;
 
-	void OnTriggerEnter(Collider col)
+	void OnTriggerStay(Collider other)
     {
-        if(col.tag == "Player" && turnState == TurnState.readyToTurn)
+        if(other.tag == "Player" && turnState == TurnState.readyToTurn)
         {
             turnState = TurnState.isTurning;
+            Debug.Log("Turning...");
             if (direction == Direction.right)
-                col.transform.Rotate(Vector3.up, 90, Space.Self);
+                other.transform.Rotate(Vector3.up, 90, Space.Self);
             else if (direction == Direction.left)
-                col.transform.Rotate(Vector3.up, -90, Space.Self);
+                other.transform.Rotate(Vector3.up, -90, Space.Self);
             turnState = TurnState.hasTurned;
+            Debug.Log("Turned.");
         }
     }
 }

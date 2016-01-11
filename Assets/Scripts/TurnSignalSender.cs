@@ -3,22 +3,26 @@ using System.Collections;
 
 public class TurnSignalSender : MonoBehaviour {
 
-    Turn turn;
+    public Turn turn;
 
     void Start()
     {
         turn = GetComponentInParent<Turn>();
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player" || turn.turnState != Turn.TurnState.waitingForTurnSignal)
-            return;
-
-        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (other.tag != "Player")
         {
-            SendTurnSignal();
+            Debug.LogWarning("Not Player!");
+            return;
         }
+        Debug.Log("Waiting For Turn Signal...");
+        //if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+            SendTurnSignal();
+            Debug.Log("Sending Turn Signal...");
+        //}
     }
 
     void SendTurnSignal()
@@ -26,6 +30,9 @@ public class TurnSignalSender : MonoBehaviour {
         if(turn.turnState == Turn.TurnState.waitingForTurnSignal)
         {
             turn.turnState = Turn.TurnState.readyToTurn;
+            Debug.Log("Sent Turn Signal.");
+            return;
         }
+        Debug.LogWarning("Didn't Send Turn Signal!");
     }
 }
